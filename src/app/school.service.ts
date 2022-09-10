@@ -81,9 +81,10 @@ export class SchoolService {
   }
 
 
+
   // GET Grades
   getGrades() : Observable<Models.Grade[]> {
-    return this.http.get<Models.Grade[]>(this.APIURL_STUDENTS)
+    return this.http.get<Models.Grade[]>(this.APIURL_GRADES)
       .pipe(
         tap(_ => console.log('Found grades')),
         catchError(this.handleError<Models.Grade[]>('GetGrades', []))
@@ -92,7 +93,7 @@ export class SchoolService {
 
   // GET Grade by ID
   getGrade(id: number) : Observable<Models.Grade> {
-    const endpoint = this.APIURL_STUDENTS+"?id="+id
+    const endpoint = this.APIURL_GRADES+"?id="+id
     return this.http.get<Models.Grade>(endpoint)
       .pipe(
         tap(_ => console.log(`Fetched grade with ID: ${id}`)),
@@ -105,7 +106,7 @@ export class SchoolService {
     grade.createdAt = new Date().toJSON()
     grade.lastUpdatedAt = grade.createdAt
 
-    return this.http.post<Models.Grade>(this.APIURL_STUDENTS, grade, this.httpOptions)
+    return this.http.post<Models.Grade>(this.APIURL_GRADES, grade, this.httpOptions)
       .pipe(
         tap((grade: Models.Grade) => {
           console.log(`Added grade with ID: ${grade.id}`)
@@ -118,7 +119,7 @@ export class SchoolService {
   updateGrade(grade : Models.Grade) : Observable<any>{
     grade.lastUpdatedAt = new Date().toJSON()
 
-    return this.http.put(this.APIURL_STUDENTS, grade, this.httpOptions)
+    return this.http.put(this.APIURL_GRADES, grade, this.httpOptions)
       .pipe(
         tap(_ => console.log(`Updated grade with ID: ${grade.id}`)),
         catchError(this.handleError<any>('updateGrade'))
@@ -127,13 +128,70 @@ export class SchoolService {
 
   // DELETE Grade
   deleteGrade(id: number) : Observable<any>{
-    return this.http.delete<Models.Grade>(this.APIURL_STUDENTS+"?id="+id)
+    return this.http.delete<Models.Grade>(this.APIURL_GRADES+"?id="+id)
       .pipe(
         tap(_ => console.log(`Deleted grade with ID: ${id}`)),
         catchError(this.handleError<any>('deleteGrade'))
       )
   }
 
+
+
+  // GET Attendances
+  getAttendances() : Observable<Models.Attendance[]> {
+    return this.http.get<Models.Attendance[]>(this.APIURL_ATTENDANCES)
+      .pipe(
+        tap(_ => console.log('Found attendances')),
+        catchError(this.handleError<Models.Attendance[]>('GetAttendances', []))
+      )
+  }
+
+  // GET Attendance by ID
+  getAttendance(id: number) : Observable<Models.Attendance> {
+    const endpoint = this.APIURL_ATTENDANCES+"?id="+id
+    return this.http.get<Models.Attendance>(endpoint)
+      .pipe(
+        tap(_ => console.log(`Fetched attendance with ID: ${id}`)),
+        catchError(this.handleError<Models.Attendance>(`getAttendance ID: ${id}`))
+      )
+  }
+
+  // POST Attendance
+  addAttendance(attendance : Models.Attendance) : Observable<Models.Attendance>{
+    attendance.createdAt = new Date().toJSON()
+    attendance.lastUpdatedAt = attendance.createdAt
+
+    return this.http.post<Models.Attendance>(this.APIURL_ATTENDANCES, attendance, this.httpOptions)
+      .pipe(
+        tap((attendance: Models.Attendance) => {
+          console.log(`Added attendance with ID: ${attendance.id}`)
+        }),
+        catchError(this.handleError<Models.Attendance>('addAttendance'))
+      )
+  }
+
+  // PUT Attendance
+  updateAttendance(attendance : Models.Attendance) : Observable<any>{
+    attendance.lastUpdatedAt = new Date().toJSON()
+
+    return this.http.put(this.APIURL_ATTENDANCES, attendance, this.httpOptions)
+      .pipe(
+        tap(_ => console.log(`Updated attendance with ID: ${attendance.id}`)),
+        catchError(this.handleError<any>('updateAttendance'))
+      )
+  }
+
+  // DELETE Attendance
+  deleteAttendance(id: number) : Observable<any>{
+    return this.http.delete<Models.Attendance>(this.APIURL_ATTENDANCES+"?id="+id)
+      .pipe(
+        tap(_ => console.log(`Deleted attendance with ID: ${id}`)),
+        catchError(this.handleError<any>('deleteAttendance'))
+      )
+  }
+
+
+  // Error Handling
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
   

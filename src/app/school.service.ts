@@ -91,7 +91,7 @@ export class SchoolService {
       .pipe(
         tap(_ => {
           console.log(`Deleted student with ID: ${id}`)
-          this.snackBar.open('Student deleted successfully!')
+          this.snackBar.open('Student deleted successfully!', 'Close')
         }),
         catchError(this.handleError<any>('deleteStudent'))
       )
@@ -153,7 +153,7 @@ export class SchoolService {
       .pipe(
         tap(_ => {
           console.log(`Deleted grade with ID: ${id}`)
-          this.snackBar.open('Grade deleted successfully!')
+          this.snackBar.open('Grade deleted successfully!', 'Close')
         }),
         catchError(this.handleError<any>('deleteGrade'))
       )
@@ -215,7 +215,7 @@ export class SchoolService {
       .pipe(
         tap(_ => {
           console.log(`Deleted attendance with ID: ${id}`)
-          this.snackBar.open('Attendance deleted successfully!')
+          this.snackBar.open('Attendance deleted successfully!', 'Close')
         }),
         catchError(this.handleError<any>('deleteAttendance'))
       )

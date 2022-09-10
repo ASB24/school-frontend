@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Observable, of, Subject } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import * as Models from 'src/interfaces';
 
@@ -8,7 +9,7 @@ import * as Models from 'src/interfaces';
   providedIn: 'root'
 })
 export class SchoolService {
-  private APIURL : string = "https://localhost:7296/api/"
+  private APIURL : string = "https://localhost:7296/api/" //default EF Core Web API url
   private APIURL_STUDENTS : string = this.APIURL+"Students/"
   private APIURL_GRADES : string = this.APIURL+"Grades/"
   private APIURL_ATTENDANCES : string = this.APIURL+"Attendances/"
@@ -16,12 +17,21 @@ export class SchoolService {
     headers: new HttpHeaders({'Content-Type': 'application/json'})
   }
 
-  constructor(private http : HttpClient) { }
+  selectedStudent : Models.Student = {} as Models.Student
+  selectedStudentChange : Subject<Models.Student> = new Subject<Models.Student>()
+
+  constructor(private http : HttpClient, private snackBar : MatSnackBar) { 
+    this.selectedStudentChange.subscribe(student => this.selectedStudent = student)
+  }
+
+  setSelectedStudent(student : Models.Student) : void {
+    this.selectedStudentChange.next(student)
+  }
 
   getClasses() : Observable<string[] | Models.Student[]> {
     return this.http.get<Models.Student[]>(this.APIURL_STUDENTS)
       .pipe(
-        tap(_ => console.log('got classes')),
+        tap(_ => console.log('Fetched classes')),
         map((studentList) => studentList.map(student => student.class)),
         catchError(this.handleError<Models.Student[]>('GetStudents', []))
       )
@@ -55,6 +65,7 @@ export class SchoolService {
       .pipe(
         tap((student: Models.Student) => {
           console.log(`Added student with ID: ${student.id}`)
+          this.snackBar.open('Student registered successfully!', 'Close')
         }),
         catchError(this.handleError<Models.Student>('addStudent'))
       )
@@ -66,7 +77,10 @@ export class SchoolService {
 
     return this.http.put(this.APIURL_STUDENTS, student, this.httpOptions)
       .pipe(
-        tap(_ => console.log(`Updated student with ID: ${student.id}`)),
+        tap(_ => {
+          console.log(`Updated student with ID: ${student.id}`)
+          this.snackBar.open('Student updated successfully!', 'Close')
+        }),
         catchError(this.handleError<any>('updateStudent'))
       )
   }
@@ -75,7 +89,10 @@ export class SchoolService {
   deleteStudent(id: number) : Observable<any>{
     return this.http.delete<Models.Student>(this.APIURL_STUDENTS+"?id="+id)
       .pipe(
-        tap(_ => console.log(`Deleted student with ID: ${id}`)),
+        tap(_ => {
+          console.log(`Deleted student with ID: ${id}`)
+          this.snackBar.open('Student deleted successfully!')
+        }),
         catchError(this.handleError<any>('deleteStudent'))
       )
   }
@@ -110,6 +127,7 @@ export class SchoolService {
       .pipe(
         tap((grade: Models.Grade) => {
           console.log(`Added grade with ID: ${grade.id}`)
+          this.snackBar.open('Grade registered successfully!', 'Close')
         }),
         catchError(this.handleError<Models.Grade>('addGrade'))
       )
@@ -121,7 +139,10 @@ export class SchoolService {
 
     return this.http.put(this.APIURL_GRADES, grade, this.httpOptions)
       .pipe(
-        tap(_ => console.log(`Updated grade with ID: ${grade.id}`)),
+        tap(_ => {
+          console.log(`Updated grade with ID: ${grade.id}`)
+          this.snackBar.open('Grade updated successfully!', 'Close')
+        }),
         catchError(this.handleError<any>('updateGrade'))
       )
   }
@@ -130,7 +151,10 @@ export class SchoolService {
   deleteGrade(id: number) : Observable<any>{
     return this.http.delete<Models.Grade>(this.APIURL_GRADES+"?id="+id)
       .pipe(
-        tap(_ => console.log(`Deleted grade with ID: ${id}`)),
+        tap(_ => {
+          console.log(`Deleted grade with ID: ${id}`)
+          this.snackBar.open('Grade deleted successfully!')
+        }),
         catchError(this.handleError<any>('deleteGrade'))
       )
   }
@@ -165,6 +189,7 @@ export class SchoolService {
       .pipe(
         tap((attendance: Models.Attendance) => {
           console.log(`Added attendance with ID: ${attendance.id}`)
+          this.snackBar.open('Attendance registered successfully!', 'Close')
         }),
         catchError(this.handleError<Models.Attendance>('addAttendance'))
       )
@@ -176,7 +201,10 @@ export class SchoolService {
 
     return this.http.put(this.APIURL_ATTENDANCES, attendance, this.httpOptions)
       .pipe(
-        tap(_ => console.log(`Updated attendance with ID: ${attendance.id}`)),
+        tap(_ => {
+          console.log(`Updated attendance with ID: ${attendance.id}`)
+          this.snackBar.open('Attendance updated successfully!', 'Close')
+        }),
         catchError(this.handleError<any>('updateAttendance'))
       )
   }
@@ -185,7 +213,10 @@ export class SchoolService {
   deleteAttendance(id: number) : Observable<any>{
     return this.http.delete<Models.Attendance>(this.APIURL_ATTENDANCES+"?id="+id)
       .pipe(
-        tap(_ => console.log(`Deleted attendance with ID: ${id}`)),
+        tap(_ => {
+          console.log(`Deleted attendance with ID: ${id}`)
+          this.snackBar.open('Attendance deleted successfully!')
+        }),
         catchError(this.handleError<any>('deleteAttendance'))
       )
   }

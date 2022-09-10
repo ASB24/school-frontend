@@ -25,6 +25,10 @@ export class StudentsTableComponent implements AfterViewInit {
     
   }
 
+  sendStudent(student : Student) : void {
+    this.SchoolService.setSelectedStudent(student)
+  }
+
   @ViewChild(MatSort) sort!: MatSort
   @ViewChild(MatPaginator) paginator!: MatPaginator
 

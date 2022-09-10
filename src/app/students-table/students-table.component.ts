@@ -29,6 +29,13 @@ export class StudentsTableComponent implements AfterViewInit {
     this.SchoolService.setSelectedStudent(student)
   }
 
+  deleteStudent(student : Student, index : number) : void {
+    this.SchoolService.deleteStudent(student.id as number).subscribe(_ => {
+      this.dataSource.data.splice(index, 1)
+      this.dataSource._updateChangeSubscription()
+    })
+  }
+
   @ViewChild(MatSort) sort!: MatSort
   @ViewChild(MatPaginator) paginator!: MatPaginator
 
@@ -37,6 +44,11 @@ export class StudentsTableComponent implements AfterViewInit {
       this.dataSource.sort = this.sort
       this.dataSource.paginator = this.paginator
     })
+  }
+
+  applyFilter(event : Event){
+    const textFilter = (event.target as HTMLInputElement).value
+    this.dataSource.filter = textFilter.trim().toLowerCase()
   }
 
 }

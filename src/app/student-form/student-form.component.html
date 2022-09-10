@@ -4,16 +4,18 @@
         <form [formGroup]="options">
             <mat-form-field appearance="fill" [floatLabel]="getFloatLabelValue()">
                 <mat-label>Name</mat-label>
-                <input [(ngModel)]="inputStudent.name" matInput placeholder="Name">
+                <input formControlName="name" matInput placeholder="Name">
             </mat-form-field>
             <mat-form-field appearance="fill" [floatLabel]="getFloatLabelValue()">
                 <mat-label>Last Name</mat-label>
-                <input [(ngModel)]="inputStudent.lastName" placeholder="Last Name">
-            </mat-form-field><br>
-            <mat-form-field appearance="fill"
-                [hideRequiredMarker]="true"
-                [floatLabel]="getFloatLabelValue()">
-                <mat-select required [(value)]="inputStudent.class" >
+                <input formControlName="lastName" matInput placeholder="Last Name">
+            </mat-form-field>
+            <mat-form-field
+            appearance="fill"
+            [hideRequiredMarker]="true"
+            [floatLabel]="getFloatLabelValue()"
+            >
+                <mat-select required formControlName="class" >
                     <mat-option>-- None --</mat-option>
                     <mat-option *ngFor="let class of classes" [value]="class">{{class}}</mat-option>
                 </mat-select>

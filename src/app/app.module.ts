@@ -7,6 +7,8 @@ import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { MaterialModule } from './material/material.module';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { StudentFormComponent } from './student-form/student-form.component';
 import { StudentsTableComponent } from './students-table/students-table.component';
 
@@ -23,7 +25,9 @@ import { StudentsTableComponent } from './students-table/students-table.componen
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    MaterialModule
+    MaterialModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
   providers: [],
   bootstrap: [AppComponent]

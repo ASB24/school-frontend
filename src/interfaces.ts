@@ -7,6 +7,15 @@ export interface Student {
     lastUpdatedAt?: string
 }
 
+export interface Grade {
+    id?: number
+    subject: string
+    literal?: string
+    studentID: number
+    createdAt?: string
+    lastUpdatedAt?: string
+}
+
 export interface Attendance {
     id?: number
     attendanceDate: Date
@@ -16,7 +25,7 @@ export interface Attendance {
     studentID: number
 }
 
-export interface AttendanceRow{
+export interface AttendanceRow {
     id?: number
     attendanceDate: Date
     studentID: number

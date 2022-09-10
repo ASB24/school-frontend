@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
-import { Student } from 'src/interfaces';
+import * as Models from 'src/interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +17,15 @@ export class SchoolService {
   }
 
   constructor(private http : HttpClient) { }
+
+  getClasses() : Observable<string[] | Models.Student[]> {
+    return this.http.get<Models.Student[]>(this.APIURL_STUDENTS)
+      .pipe(
+        tap(_ => console.log('got classes')),
+        map((studentList) => studentList.map(student => student.class)),
+        catchError(this.handleError<Models.Student[]>('GetStudents', []))
+      )
+  }
 
   // GET Students
   getStudents() : Observable<Student[]> {

@@ -28,37 +28,42 @@ export class SchoolService {
   }
 
   // GET Students
-  getStudents() : Observable<Student[]> {
-    return this.http.get<Student[]>(this.APIURL_STUDENTS)
+  getStudents() : Observable<Models.Student[]> {
+    return this.http.get<Models.Student[]>(this.APIURL_STUDENTS)
       .pipe(
-        tap(_ => console.log('Found students')),
-        catchError(this.handleError<Student[]>('GetStudents', []))
+        tap(res => console.log('Found students')),
+        catchError(this.handleError<Models.Student[]>('GetStudents', []))
       )
   }
 
   // GET Student by ID
-  getStudent(id: number) : Observable<Student> {
+  getStudent(id: number) : Observable<Models.Student> {
     const endpoint = this.APIURL_STUDENTS+"?id="+id
-    return this.http.get<Student>(endpoint)
+    return this.http.get<Models.Student>(endpoint)
       .pipe(
         tap(_ => console.log(`Fetched student with ID: ${id}`)),
-        catchError(this.handleError<Student>(`getStudent ID: ${id}`))
+        catchError(this.handleError<Models.Student>(`getStudent ID: ${id}`))
       )
   }
 
   // POST Student
-  addStudent(student : Student) : Observable<Student>{
-    return this.http.post<Student>(this.APIURL_STUDENTS, student, this.httpOptions)
+  addStudent(student : Models.Student) : Observable<Models.Student>{
+    student.createdAt = new Date().toJSON()
+    student.lastUpdatedAt = student.createdAt
+
+    return this.http.post<Models.Student>(this.APIURL_STUDENTS, student, this.httpOptions)
       .pipe(
-        tap((student: Student) => {
+        tap((student: Models.Student) => {
           console.log(`Added student with ID: ${student.id}`)
         }),
-        catchError(this.handleError<Student>('addStudent'))
+        catchError(this.handleError<Models.Student>('addStudent'))
       )
   }
 
   // PUT Student
-  updateStudent(student : Student) : Observable<any>{
+  updateStudent(student : Models.Student) : Observable<any>{
+    student.lastUpdatedAt = new Date().toJSON()
+
     return this.http.put(this.APIURL_STUDENTS, student, this.httpOptions)
       .pipe(
         tap(_ => console.log(`Updated student with ID: ${student.id}`)),
@@ -68,7 +73,7 @@ export class SchoolService {
 
   // DELETE Student
   deleteStudent(id: number) : Observable<any>{
-    return this.http.delete<Student>(this.APIURL_STUDENTS+"?id="+id)
+    return this.http.delete<Models.Student>(this.APIURL_STUDENTS+"?id="+id)
       .pipe(
         tap(_ => console.log(`Deleted student with ID: ${id}`)),
         catchError(this.handleError<any>('deleteStudent'))

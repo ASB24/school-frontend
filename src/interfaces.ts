@@ -16,22 +16,30 @@ export interface Grade {
     lastUpdatedAt?: string
 }
 
+export interface GradeRow {
+    gradeID: number
+    studentID: number
+    studentName: string
+    studentLastName: string
+    subject: string
+    grade: string
+    literal: string
+}
+
 export interface Attendance {
     id?: number
     attendanceDate: Date
     isPresent: boolean
     createdAt?: string
-    lastUpdateAt?: string
+    lastUpdatedAt?: string
     studentID: number
 }
 
 export interface AttendanceRow {
-    id?: number
-    attendanceDate: Date
+    attendanceID: number
     studentID: number
+    attendanceDate: Date
     studentName: string
     studentLastName: string
     isPresent: boolean
-    createdAt?: string
-    lastUpdateAt?: string
 }

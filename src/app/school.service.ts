@@ -80,6 +80,60 @@ export class SchoolService {
       )
   }
 
+
+  // GET Grades
+  getGrades() : Observable<Models.Grade[]> {
+    return this.http.get<Models.Grade[]>(this.APIURL_STUDENTS)
+      .pipe(
+        tap(_ => console.log('Found grades')),
+        catchError(this.handleError<Models.Grade[]>('GetGrades', []))
+      )
+  }
+
+  // GET Grade by ID
+  getGrade(id: number) : Observable<Models.Grade> {
+    const endpoint = this.APIURL_STUDENTS+"?id="+id
+    return this.http.get<Models.Grade>(endpoint)
+      .pipe(
+        tap(_ => console.log(`Fetched grade with ID: ${id}`)),
+        catchError(this.handleError<Models.Grade>(`getGrade ID: ${id}`))
+      )
+  }
+
+  // POST Grade
+  addGrade(grade : Models.Grade) : Observable<Models.Grade>{
+    grade.createdAt = new Date().toJSON()
+    grade.lastUpdatedAt = grade.createdAt
+
+    return this.http.post<Models.Grade>(this.APIURL_STUDENTS, grade, this.httpOptions)
+      .pipe(
+        tap((grade: Models.Grade) => {
+          console.log(`Added grade with ID: ${grade.id}`)
+        }),
+        catchError(this.handleError<Models.Grade>('addGrade'))
+      )
+  }
+
+  // PUT Grade
+  updateGrade(grade : Models.Grade) : Observable<any>{
+    grade.lastUpdatedAt = new Date().toJSON()
+
+    return this.http.put(this.APIURL_STUDENTS, grade, this.httpOptions)
+      .pipe(
+        tap(_ => console.log(`Updated grade with ID: ${grade.id}`)),
+        catchError(this.handleError<any>('updateGrade'))
+      )
+  }
+
+  // DELETE Grade
+  deleteGrade(id: number) : Observable<any>{
+    return this.http.delete<Models.Grade>(this.APIURL_STUDENTS+"?id="+id)
+      .pipe(
+        tap(_ => console.log(`Deleted grade with ID: ${id}`)),
+        catchError(this.handleError<any>('deleteGrade'))
+      )
+  }
+
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
   

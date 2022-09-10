@@ -13,7 +13,7 @@ import { MatPaginator } from '@angular/material/paginator';
 export class StudentsTableComponent implements AfterViewInit {
 
   dataSource : MatTableDataSource<Student> = new MatTableDataSource()
-  tableColumns : string[] = ['id','name','lastName','class']
+  tableColumns : string[] = ['id','name','lastName','class', 'action']
   
   constructor(private SchoolService: SchoolService, private changeDetector : ChangeDetectorRef) { 
     this.SchoolService.getStudents().subscribe(data => {

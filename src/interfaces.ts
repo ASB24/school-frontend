@@ -3,16 +3,16 @@ export interface Student {
     name: string
     lastName: string
     class: string
-    createdAt?: Date
-    lastUpdatedAt?: Date
+    createdAt?: string
+    lastUpdatedAt?: string
 }
 
 export interface Attendance {
     id?: number
     attendanceDate: Date
     isPresent: boolean
-    createdAt?: Date
-    lastUpdateAt?: Date
+    createdAt?: string
+    lastUpdateAt?: string
     studentID: number
 }
 
@@ -23,6 +23,6 @@ export interface AttendanceRow{
     studentName: string
     studentLastName: string
     isPresent: boolean
-    createdAt?: Date
-    lastUpdateAt?: Date
+    createdAt?: string
+    lastUpdateAt?: string
 }

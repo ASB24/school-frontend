@@ -17,11 +17,21 @@ export class SchoolService {
     headers: new HttpHeaders({'Content-Type': 'application/json'})
   }
 
+  studentList : Models.Student[] = []
+  studentListChange : Subject<Models.Student[]> = new Subject<Models.Student[]>()
+
   selectedStudent : Models.Student = {} as Models.Student
   selectedStudentChange : Subject<Models.Student> = new Subject<Models.Student>()
 
   constructor(private http : HttpClient, private snackBar : MatSnackBar) { 
     this.selectedStudentChange.subscribe(student => this.selectedStudent = student)
+
+    this.studentListChange.subscribe(list => {
+      this.studentList = list
+    })
+    this.getStudents().subscribe(list => {
+      this.studentListChange.next(list)
+    })
   }
 
   setSelectedStudent(student : Models.Student) : void {

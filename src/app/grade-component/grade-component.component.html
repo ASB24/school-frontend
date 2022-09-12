@@ -1,0 +1,34 @@
+<mat-card>
+    <form [formGroup]="studentGradeForm" (ngSubmit)="submitGrades()">
+        <mat-form-field appearance="fill">
+            <mat-label>Select a Student</mat-label>
+            <mat-select formControlName="studentID">
+                <mat-option>None</mat-option>
+                <mat-option *ngFor="let student of studentList" [value]="student.id" (onSelectionChange)="getGrades(student.id)">
+                    {{student.name}} {{student.lastName}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field><br>
+        <mat-form-field>
+            <mat-label>Spanish Grade</mat-label>
+            <input type="number" formControlName="spanishGrade" matInput (ngModelChange)="changeLiteral('spanish')" placeholder="Grade">
+            <span matSuffix>{{spanishGradeLiteral}}</span>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Math Grade</mat-label>
+            <input formControlName="mathGrade" matInput (ngModelChange)="changeLiteral('math')" placeholder="Grade">
+            <span>{{mathGradeLiteral}}</span>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Social Studies Grade</mat-label>
+            <input formControlName="socialGrade" matInput (ngModelChange)="changeLiteral('social')" placeholder="Grade">
+            <span>{{socialGradeLiteral}}</span>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Natural Sciences Grade</mat-label>
+            <input formControlName="naturalGrade" matInput (ngModelChange)="changeLiteral('natural')" placeholder="Grade">
+            <span>{{naturalGradeLiteral}}</span>
+        </mat-form-field><br>
+        <button type="submit" [disabled]="!studentGradeForm.valid" mat-raised-button>Submit</button>
+    </form>
+</mat-card>

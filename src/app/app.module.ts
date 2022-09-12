@@ -11,12 +11,21 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { StudentFormComponent } from './student-form/student-form.component';
 import { StudentsTableComponent } from './students-table/students-table.component';
+import { AttendanceListComponent } from './attendance-list/attendance-list.component';
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
+import { GradeComponentComponent } from './grade-component/grade-component.component';
+import { HeaderComponent } from './header/header.component';
+import { StudentPackageComponent } from './student-package/student-package.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     StudentFormComponent,
     StudentsTableComponent,
+    AttendanceListComponent,
+    GradeComponentComponent,
+    HeaderComponent,
+    StudentPackageComponent,
   ],
   imports: [
     BrowserModule,
@@ -27,7 +36,8 @@ import { StudentsTableComponent } from './students-table/students-table.componen
     BrowserAnimationsModule,
     MaterialModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatMomentDateModule
   ],
   providers: [],
   bootstrap: [AppComponent]

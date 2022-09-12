@@ -5,6 +5,7 @@ import {FloatLabelType} from '@angular/material/form-field';
 import { SchoolService } from '../school.service';
 import { MatTabGroup } from '@angular/material/tabs';
 import { __values } from 'tslib';
+import { DataSource } from '@angular/cdk/collections';
 
 @Component({
   selector: 'app-student-form',
@@ -13,22 +14,18 @@ import { __values } from 'tslib';
 })
 export class StudentFormComponent implements OnInit {
 
-  classes : string[] = []
-
   floatLabelControl = new FormControl('auto' as FloatLabelType)
 
   addStudent = this._formBuilder.group({
     floatLabel: this.floatLabelControl,
     name: ['', Validators.required],
-    lastName: ['', Validators.required],
-    class: ['', Validators.required]
+    lastName: ['', Validators.required]
   });
 
   updateStudent = this._formBuilder.group({
     floatLabel: this.floatLabelControl,
     name: ['', Validators.required],
-    lastName: ['', Validators.required],
-    class: ['', Validators.required]
+    lastName: ['', Validators.required]
   });
   updateFormStudent : Student = {} as Student
   @ViewChild("operations", { static: false })
@@ -37,8 +34,7 @@ export class StudentFormComponent implements OnInit {
   deleteStudent = this._formBuilder.group({
     floatLabel: this.floatLabelControl,
     name: ['', Validators.required],
-    lastName: ['', Validators.required],
-    class: ['', Validators.required]
+    lastName: ['', Validators.required]
   });
 
   constructor(private _formBuilder: FormBuilder, private _SchoolService : SchoolService) { 
@@ -51,7 +47,7 @@ export class StudentFormComponent implements OnInit {
   _addStudent(){
     this._SchoolService.addStudent(this.addStudent.value as Student).subscribe(student => {
       this.addStudent.reset()
-
+      
     })
   }
 
@@ -66,10 +62,7 @@ export class StudentFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this._SchoolService.getClasses().subscribe(classList => {
-      this.classes = classList as string[]
-      this.classes = [...new Set(this.classes)]
-    })
+    
   }
 
 }

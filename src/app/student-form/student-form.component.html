@@ -12,21 +12,8 @@
                     <mat-form-field appearance="fill" [floatLabel]="getFloatLabelValue()">
                         <mat-label>Last Name</mat-label>
                         <input formControlName="lastName" matInput placeholder="Last Name">
-                    </mat-form-field>
-                    <mat-form-field
-                    appearance="fill"
-                    [hideRequiredMarker]="true"
-                    [floatLabel]="getFloatLabelValue()"
-                    >
-                        <mat-select required formControlName="class" >
-                            <mat-option>-- None --</mat-option>
-                            <ng-container *ngFor="let class of classes">
-                                <mat-option *ngIf="classes.includes(class)" [value]="class"> {{class}} </mat-option>
-                            </ng-container>
-                        </mat-select>
-                        <mat-label><mat-icon>event_note</mat-icon><i> Class</i></mat-label>
                     </mat-form-field><br>
-                    <button mat-raised-button type="submit">Register</button>
+                    <button [disabled]="!addStudent.valid" mat-raised-button type="submit">Register</button>
                 </mat-card-content>
              </form>
         </mat-card>
@@ -45,19 +32,8 @@
                     <mat-form-field appearance="fill" [floatLabel]="getFloatLabelValue()">
                         <mat-label>Last Name</mat-label>
                         <input [value]="updateFormStudent.lastName" formControlName="lastName" matInput placeholder="Last Name">
-                    </mat-form-field>
-                    <mat-form-field
-                    appearance="fill"
-                    [hideRequiredMarker]="true"
-                    [floatLabel]="getFloatLabelValue()"
-                    >
-                        <mat-select required formControlName="class" [(value)]="updateFormStudent.class">
-                            <mat-option>-- None --</mat-option>
-                            <mat-option *ngFor="let class of classes" [value]="class">{{class}}</mat-option>
-                        </mat-select>
-                        <mat-label><mat-icon>event_note</mat-icon><i> Class</i></mat-label>
                     </mat-form-field><br>
-                    <button mat-raised-button type="submit">Update</button>
+                    <button [disabled]="!updateStudent.valid" mat-raised-button type="submit">Update</button>
                 </mat-card-content>
              </form>
         </mat-card>

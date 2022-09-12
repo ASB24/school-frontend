@@ -29,14 +29,6 @@
         </th>
         <td mat-cell *matCellDef="let student"> {{student.lastName}} </td>
       </ng-container>
-    
-      <!-- Class Column -->
-      <ng-container matColumnDef="class">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Class">
-          Class
-        </th>
-        <td mat-cell *matCellDef="let student"> {{student.class}} </td>
-      </ng-container>
 
       <!-- Action Column -->
       <ng-container matColumnDef="action">
